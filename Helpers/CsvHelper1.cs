@@ -1,12 +1,13 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using LearnCSVHelper.Models.CsvModel;
 using System.Globalization;
 
 namespace LearnCSVHelper.Helpers
 {
     public static class CsvHelper1
     {
-        public static List<T> ConvertToListObject<T>(IFormFile file) where T : class
+        public static List<T> ConvertFileToListObject<T>(IFormFile file) where T : class
         {
             var config = new CsvConfiguration(CultureInfo.InvariantCulture)
             {
@@ -18,6 +19,27 @@ namespace LearnCSVHelper.Helpers
                 var records = csv.GetRecords<T>().ToList();
                 return records;
             }
+        }
+        public static byte[] ConvertListObjectToByteArray<T>(List<T> records)
+        {
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Delimiter = ";"
+            };
+            var memoryStream = new MemoryStream();
+            var writer = new StreamWriter(memoryStream);
+            var csv = new CsvWriter(writer, config);
+
+            csv.WriteRecords(records);
+            csv.Flush();
+            memoryStream.Position = 0;
+
+            var csvByteArray = memoryStream.ToArray();
+            csv.Dispose();
+            writer.Dispose();
+            memoryStream.Dispose();
+
+            return csvByteArray;
         }
     }
 }

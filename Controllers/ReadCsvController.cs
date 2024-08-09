@@ -14,7 +14,7 @@ namespace LearnCSVHelper.Controllers
         [Route("category")]
         public IActionResult Category(IFormFile file)
         {
-            var result = CsvHelper1.ConvertToListObject<CategoryCsvImportModel>(file);
+            var result = CsvHelper1.ConvertFileToListObject<CategoryCsvImportModel>(file);
             return Ok(result);
         }
 
@@ -22,7 +22,7 @@ namespace LearnCSVHelper.Controllers
         [Route("product")]
         public IActionResult Product(IFormFile file)
         {
-            var result = CsvHelper1.ConvertToListObject<ProductCsvImportModel>(file);
+            var result = CsvHelper1.ConvertFileToListObject<ProductCsvImportModel>(file);
             return Ok(result);
         }
 
@@ -30,7 +30,7 @@ namespace LearnCSVHelper.Controllers
         [Route("booking")]
         public IActionResult Booking(IFormFile file)
         {
-            var result = CsvHelper1.ConvertToListObject<BookingCsvImportModel>(file);
+            var result = CsvHelper1.ConvertFileToListObject<BookingCsvImportModel>(file);
             return Ok(result);
         }
     }
